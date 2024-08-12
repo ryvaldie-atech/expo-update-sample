@@ -1,4 +1,26 @@
 {
   "name": "ExpoUpdateSample",
-  "displayName": "ExpoUpdateSample"
+  "displayName": "ExpoUpdateSample",
+  "expo": {
+    "name": "expoupdatesample",
+    "slug": "expoupdatesample",
+    "jsEngine": "jsc",
+    "extra": {
+      "eas": {
+        "projectId": "3086b1eb-d0a5-496f-9056-920255f66c7d"
+      }
+    },
+    "runtimeVersion": "1.0.1",
+    "channelName": "preview",
+    "updates": {
+      "enabled": true,
+      "url": "https://u.expo.dev/3086b1eb-d0a5-496f-9056-920255f66c7d"
+    },
+    "android": {
+      "package": "com.expoupdatesample"
+    },
+    "ios": {
+      "bundleIdentifier": "org.reactjs.native.example.ExpoUpdateSample"
+    }
+  }
 }

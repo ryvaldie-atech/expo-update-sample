@@ -15,6 +15,7 @@ import {
   StatusBar,
   StyleSheet,
   Text,
+  ToastAndroid,
   useColorScheme,
   View,
 } from 'react-native';
@@ -26,6 +27,8 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+
+import * as Updates from 'expo-updates';
 
 const Section: React.FC<{
   title: string;
@@ -56,6 +59,31 @@ const Section: React.FC<{
 };
 
 const App = () => {
+  const checkForUpdates = async () => {
+    try {
+      const channel = Updates.channel;
+      ToastAndroid.show('Channel: ' + channel, ToastAndroid.SHORT);
+      const update = await Updates.checkForUpdateAsync();
+      ToastAndroid.show('Checking for updates ...', ToastAndroid.SHORT);
+      if (update.isAvailable) {
+        ToastAndroid.show('Update Available! Reloading Now.', ToastAndroid.LONG);
+        console.log('update')
+        await Updates.fetchUpdateAsync();
+        await Updates.reloadAsync(); // May reload the app
+      }
+      ToastAndroid.show('Is Update Available: ' + update.isAvailable, ToastAndroid.SHORT);
+    } catch (e: any) {
+      ToastAndroid.show('' + e, ToastAndroid.SHORT);
+      // Handle errors
+      console.error(e);
+    }
+  };
+
+  React.useEffect(() => {
+    console.log('check')
+    checkForUpdates();
+  }, []);
+
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
@@ -74,8 +102,7 @@ const App = () => {
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
           <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
+            <Text style={styles.highlight}>Runtime Version 1.0.1</Text>
           </Section>
           <Section title="See Your Changes">
             <ReloadInstructions />
@@ -84,7 +111,7 @@ const App = () => {
             <DebugInstructions />
           </Section>
           <Section title="Learn More">
-            Read the docs to discover what to do next:
+            Update learn more
           </Section>
           <LearnMoreLinks />
         </View>
